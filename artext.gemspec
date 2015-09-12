@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.email         = ["anindyamondal@mazdigital.com"]
   spec.summary       = %q{Extract article from websites.}
   spec.description   = %q{Extract article and other metadata from websites.}
-  spec.homepage      = ""
+  spec.homepage      = "https://github.com/Anindya91/artext"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0")
@@ -20,7 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.6"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec"
+  spec.add_development_dependency "rspec", "~> 3.3"
 
 
   spec.add_dependency "addressable", "~> 2.3"

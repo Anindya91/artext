@@ -20,7 +20,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    require 'artext'
+    
+    Artext.extract(url)
 
 ## Contributing
 
