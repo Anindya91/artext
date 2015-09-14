@@ -48,7 +48,7 @@ DEPENDENCIES
   artext!
   bundler (~> 1.6)
   rake (~> 10.0)
-  rspec
+  rspec (~> 3.3)
 
 BUNDLED WITH
    1.10.6

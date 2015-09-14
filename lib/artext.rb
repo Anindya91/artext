@@ -121,12 +121,11 @@ module Artext
     if (article.count > 1)
       article = get_correct_article(article)
       score = 0.8
-    end
-    if (!is_blank?(article))
+    end 
+    if (is_blank?(article))
       article = find_article(doc)
       score = 0.6
     end
-    score = score - 0.5 if (type != "article")
     if (is_blank?(article))
       # image url
       begin
@@ -139,6 +138,7 @@ module Artext
     else
       article = remove_unwanted_items_from(article)
       article, score = find_relevant(article, score)
+      score = score - 0.5 if (type != "article")
       if (score > 0.9)
         html, imgs = iteratively_clean(article, "", [], score)
       else
@@ -163,7 +163,7 @@ module Artext
             rel = ps
           end
         end
-        if ((last_p > 5 && last_p == max_p) || max_p - total_p < 2)
+        if ((last_p > 5 && last_p == max_p) || total_p - max_p < 2)
           score = 0.95 if (score < 1)
           break
         end
@@ -224,7 +224,7 @@ module Artext
       end
     elsif (element.name == "h1" || element.name == "h2" || element.name == "h3" || element.name == "h4")
       tv = "<h2>#{element.text.split.join(" ")}</h2>" if (!is_blank?(element.text.split.join(" ")))
-    elsif (element.name == "p" || element.name == "div")
+    elsif (element.name == "p")
       p_elem, ti = extractp(element, score)
       tv = "<p>#{p_elem}</p>" if (!is_blank?(p_elem))
       images = images + ti if (!is_blank?(ti))
@@ -243,6 +243,16 @@ module Artext
     elsif (element.name == "ol" || element.name == "ul")
       tv, ti = listhandle(element)
       images = images + ti
+    elsif (element.name == "div" || element.name == "span")
+      html = ""
+      imgs = []
+      element.children.each do |elem|
+        tv, ti = get_element_html(elem, [], score)
+        html = html + tv if (!is_blank?(tv))
+        imgs = imgs + ti if (!is_blank?(ti))
+      end
+      tv = html
+      images = imgs
     end
     return tv, images
   end
@@ -356,7 +366,7 @@ module Artext
   end
 
   def self.remove_unwanted_items_from(article)
-    unwanted_elements = ["//script", "//comment()", "//aside", ".aside", "iframe", "//noscript", "//form"]
+    unwanted_elements = ["//script", "//comment()", "//aside", ".aside", "iframe", "//noscript", "//form", "//header", "//footer"]
     unwanted_elements.each do |elem|
       article.search("#{elem}").remove
     end
