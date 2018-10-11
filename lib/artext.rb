@@ -228,9 +228,10 @@ module Artext
     elsif (element.name == "p")
       p_elem, ti = extractp(element, score)
       tv = "<p>#{p_elem}</p>" if (!is_blank?(p_elem))
+      tv = tv.gsub("<p></p>", "")
       images = images + ti if (!is_blank?(ti))
     elsif (element.name == "figure")
-      cap = element.search("figcaption").text.split.join(" ")
+      cap = element.search("figcaption").inner_html
       cap = is_blank?(cap) ? "" : "<figcaption>#{cap}</figcaption>"
       tv, ti = figurehandle(element, "", [])
       tv = "<figure>#{tv}#{cap}</figure>" if (!is_blank?(tv))
@@ -294,7 +295,7 @@ module Artext
   end
 
   def self.phandle(element, html, images)
-    if (!is_blank?(element.children) && !(element.name == "a" && is_blank?(element.search("img"))))
+    if (!is_blank?(element.children) && !((element.name == "a" || element.name == "figure") && is_blank?(element.search("img"))))
       element.children.each do |elem|
         html, images = phandle(elem, html, images)
       end
@@ -305,6 +306,12 @@ module Artext
         html = "</p><figure><img src=\"#{img}\"></figure><p>"
         images << img
       end
+    elsif (element.name == "figure")
+      cap = element.search("figcaption").inner_html
+      cap = is_blank?(cap) ? "" : "<figcaption>#{cap}</figcaption>"
+      tv, ti = figurehandle(element, "", [])
+      html = "</p><figure>#{tv}#{cap}</figure><p>" if (!is_blank?(tv))
+      images << ti if (!is_blank?(ti))
     elsif (element.name == "a")
       html = html + " <a href=\"#{element.attribute("href").value if (!is_blank?(element.attribute("href")))}\">#{element.text.split.join(" ")}</a> "
     elsif (element.name == "text")
