@@ -26,6 +26,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "addressable", "~> 2.5"
   spec.add_dependency "httparty", "~> 0.16"
   spec.add_dependency "fastimage", "~> 2.1"
-  spec.add_dependency "mini_magick", "~> 4.9"
+  spec.add_dependency "mini_magick", "~> 3.7"
   spec.add_dependency "nokogiri", "~> 1.8"
 end
