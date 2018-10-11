@@ -23,9 +23,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.3"
 
 
-  spec.add_dependency "addressable", "~> 2.3"
-  spec.add_dependency "httparty", "~> 0.13"
-  spec.add_dependency "fastimage", "~> 1.6"
-  spec.add_dependency "mini_magick", "~> 3.7"
-  spec.add_dependency "nokogiri", "~> 1.6"
+  spec.add_dependency "addressable"
+  spec.add_dependency "httparty"
+  spec.add_dependency "fastimage"
+  spec.add_dependency "mini_magick"
+  spec.add_dependency "nokogiri"
 end

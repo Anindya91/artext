@@ -4,6 +4,7 @@ require "httparty"
 require "nokogiri"
 require "mini_magick"
 require "fastimage"
+require "addressable"
 
 module Artext
 
@@ -121,7 +122,7 @@ module Artext
     if (article.count > 1)
       article = get_correct_article(article)
       score = 0.8
-    end 
+    end
     if (is_blank?(article))
       article = find_article(doc)
       score = 0.6
@@ -173,7 +174,7 @@ module Artext
     end
     return rel, score
   end
-  
+
   def self.iteratively_clean(element, html, images, score)
     html = ""
     imgs = []
@@ -236,6 +237,7 @@ module Artext
       images = images + ti
     elsif (element.name == "text")
       tv = element.text.split.join(" ")
+      tv = nil if tv == "advertisement"
       tv = "<p class\"inline\">#{tv}</p>" if (!is_blank?(tv))
     elsif (element.name == "i")
       tv = element.text.split.join(" ")

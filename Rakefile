@@ -6,4 +6,6 @@ RSpec::Core::RakeTask.new
 task :default => :spec
 task :test => :spec
 
-
+task :console do
+  exec "irb -r mygem -I ./lib"
+end
