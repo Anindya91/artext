@@ -2,11 +2,11 @@ PATH
   remote: .
   specs:
     artext (0.0.3)
-      addressable
-      fastimage
-      httparty
-      mini_magick
-      nokogiri
+      addressable (~> 2.5)
+      fastimage (~> 2.1)
+      httparty (~> 0.16)
+      mini_magick (~> 4.9)
+      nokogiri (~> 1.8)
 
 GEM
   remote: https://rubygems.org/
